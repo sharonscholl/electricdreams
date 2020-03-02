@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <!--<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>-->
+  <meta charset="utf-8">
+  <title>Electric Dreams</title>
+  <style media="screen">
+    /* *{border:1px solid red;} */
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      /*background-color: blue;
+       color: #0f0;*/
+
+ 
+      color: #d6d8d3;
+      font-family: 'Raleway', sans-serif;
+      font-size: 30px;
+      font-weight: normal;
+      padding: 1em;
+      display: flex;
+      flex-direction: column;
+      background-image: url("images/winter-wonderland-flipped.jpg");
+      background-repeat: no-repeat;
+    }
+
+    h1 {
+      margin-left: 0em;
+      font-size: 120px;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 800;
+      -webkit-text-stroke-width: 1px;
+      -webkit-text-stroke-color: #505b52;
+    }
+
+    #computer {
+      background-color: #a15d26;
+      border: 4px solid #505b52;
+      color: #d6d8d3;
+      width: 80ch;
+      padding: 1em;
+      position: absolute;
+      bottom: 220px;
+      left: 10 px;
+    }
+
+    #human {
+      background-color: #505b52;
+      border: 4px;
+      border-color: #6e2912 !important;
+      width: 80ch;
+      padding: 1em;
+      font-size: inherit;
+      font-family: inherit;
+      color: #d6d8d3;
+      /*border-style: inset;*/
+      outline-color: #a15d26;
+      position: absolute;
+      bottom: 120px;
+      left: 10 px;
+    }
+
+    /*select {
+   border-style: inset;
+   outline-color: orange;
+}*/
+
+    button {
+      width: 10ch;
+      margin: 1em 0 0 2em;
+      font-size: inherit;
+      font-family: 'Raleway', sans-serif;
+      border-radius: 14px;
+      background-color: #a15d26;
+      color: #d6d8d3;
+      border-color: #505b52;
+      position: absolute;
+      bottom: 50px;
+      left: 10 px;
+    }
+
+  /*  .gotobottom {
+      display: flex;
+      align-self: flex-end;
+      margin-bottom: 10 px;
+    }*/
+
+
+    .displayNone {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h1><b>Horses 101</b></h1>
+  <!--<br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>-->
+  <!--<div class='gotobottom'> </div>-->
+  <p id="computer">Have you ever ridden a horse?</p>
+  <input type="text" placeholder="Type your response" id="human">
+  <button type="button" name="button" id="button">Enter</button>
+
+
+
+  <script type="text/javascript">
+    //fun
+    //grab all the elements we need to control
+    let computer = document.querySelector('#computer');
+    let human = document.querySelector('#human');
+    let button = document.querySelector('#button');
+    human.focus()
+
+    //other vars we will need
+    let computerMsg = ""
+    let humanMsg = ""
+
+    let genericResponses = ['If I were a horse, I think I would unload you too!',
+      'Well, maybe you should just do the pony rides at the county fair!',
+      'Come on, where is your sense of adventure?!?',
+      'On second thought, you had better stick to the MERRY-GO-ROUND!'
+    ]
+    //console.log(genericReponses[2]);
+    let newResponse
+    let responseNumber
+    let questionTrack = "ride"
+
+    //set up the event listeners
+    button.addEventListener('click', clickHandler, false);
+    window.addEventListener('keydown', keydownHandler, false);
+
+    //set up handler functions
+    function clickHandler() {
+      playGame()
+    }
+
+    function keydownHandler(evt) {
+      if (evt.keyCode === 13) {
+        playGame()
+      }
+    }
+
+    //time for the game logic
+    function playGame() {
+      humanMsg = (human.value).toLowerCase()
+
+      //analyze the human input
+      /* if (questionTrack=="mood"){
+
+       }else if (questionTrack =="color"){
+
+       }else if (questionTrack == "dog"){
+
+       }*/
+      switch (questionTrack) {
+        case "ride":
+          rideAnalysis()
+          //computerMsg = "Bye"
+          //
+          break
+        case "mounted":
+          mountedAnalysis()
+          //
+          break
+        case "trailride":
+          trailrideAnalysis()
+          //
+          break
+        case "experienced":
+          experiencedAnalysis()
+          //
+          break
+        case "getbackon":
+          getbackonAnalysis()
+          //
+          break
+        case "green":
+          greenAnalysis()
+          //
+          break
+        case "lessons":
+          lessonsAnalysis()
+          console.log("lessons")
+          //
+          break
+        case "grizz":
+          grizzAnalysis()
+          //
+          break
+        case "fear":
+          fearAnalysis()
+          //
+
+          break
+        case "reason":
+          reasonAnalysis()
+          //
+          break
+        case "valid":
+          validAnalysis()
+          //
+          break
+        case "good":
+          goodAnalysis()
+          //
+          break
+        case "brave":
+          braveAnalysis()
+          //
+          break
+        default:
+          genericResponse()
+          break
+      }
+
+
+      computer.textContent = computerMsg
+      humanMsg = ""
+      human.value = humanMsg
+
+      function rideAnalysis() {
+        if (humanMsg.indexOf("yes") != -1) {
+          //have you ridden a horse
+          computerMsg = "Did you stay aboard?"
+          questionTrack = "mounted"
+        } else if (humanMsg.indexOf('no') != -1) {
+          computerMsg = "Would you like to go on a trail ride in the mountains?"
+          questionTrack = "trailride"
+        } else {
+          genericResponse()
+        }
+      } //end rideAnalysis
+
+
+      function mountedAnalysis() {
+        if (humanMsg.indexOf("yes") != -1) {
+          //did you stay on the horse
+          computerMsg = "Good for you! Would you consider yourself an experienced rider?"
+          questionTrack = "experienced"
+        } else if (humanMsg.indexOf('no') != -1) {
+          computerMsg = "Did you get back on IMMEDIATELY afterwards?"
+          questionTrack = "getbackon"
+        } else {
+          genericResponse()
+        }
+      } //end mountedAnalysis
+
+      function trailrideAnalysis() {
+        if (humanMsg.indexOf("yes") != -1) {
+          //pretty bad
+          computerMsg = "Did you know a grizzly bear can outrun a horse?"
+          questionTrack = "grizz"
+        } else if (humanMsg.indexOf('no') != -1) {
+          computerMsg = "Why - are you afraid of horses?"
+          questionTrack = "fear"
+        } else {
+          genericResponse()
+        }
+      } //end trailrideAnalysis
+
+
+      function experiencedAnalysis() {
+        if (humanMsg.indexOf("yes") != -1) {
+          //pretty bad
+          computerMsg = "Would like to ride a green (unbroke) horse?"
+          questionTrack = "green"
+        } else if (humanMsg.indexOf('no') != -1) {
+          computerMsg = "Would you rather start some riding lessons with an experienced teacher?"
+          questionTrack = "lessons"
+        } else {
+          genericResponse()
+        }
+      } //end greenAnalysis
+
+      function greenAnalysis() {
+        if (humanMsg.indexOf("yes") != -1) {
+          //pretty bad
+          computerMsg = "You should consider adopting a wild horse (Mustang)"
+          questionTrack = "mustang"
+        } else if (humanMsg.indexOf('no') != -1) {
+          computerMsg = "Why not? Are you scared?"
+          questionTrack = "scared"
+        } else {
+          genericResponse()
+        }
+      } //end greenAnalysis
+
+      function getbackonAnalysis() {
+        if (humanMsg.indexOf("yes") != -1) {
+          //pretty bad
+          computerMsg = "Good for you! Were you scared?"
+          questionTrack = "good"
+        } else if (humanMsg.indexOf('no') != -1) {
+          computerMsg = "You taught that horse a very BAD lesson!!!"
+          questionTrack = "bad"
+        } else {
+          genericResponse()
+        }
+      } //end getbackonAnalysis
+
+      function lessonsAnalysis() {
+        if (humanMsg.indexOf("yes") != -1) {
+          //pretty bad
+          computerMsg = "OK! We can get you set up with a good riding facility with a great teacher"
+          questionTrack = "stable"
+        } else if (humanMsg.indexOf('no') != -1) {
+          computerMsg = "Why would you not want to improve your riding skills?"
+          questionTrack = "whynot"
+        } else {
+          genericResponse()
+        }
+      } //end lessonsAnalysis
+
+      function grizzAnalysis() {
+        if (humanMsg.indexOf("yes") != -1) {
+          //pretty bad
+          computerMsg = "Are you still brave enough to take a chance on grizzly bears and steep mountain trails?"
+          questionTrack = "brave"
+        } else if (humanMsg.indexOf('no') != -1) {
+          computerMsg = "How fast can YOU run??"
+          questionTrack = "outrun"
+        } else {
+          genericResponse()
+        }
+      } //end grizzAnalysis
+
+      function fearAnalysis() {
+        if (humanMsg.indexOf("yes") != -1) {
+          //pretty bad
+          computerMsg = "Do you have a valid reason for your fear?"
+          questionTrack = "valid"
+        } else if (humanMsg.indexOf('no') != -1) {
+          computerMsg = "Your loss! You should give riding a try!"
+          questionTrack = ""
+        } else {
+          genericResponse()
+        }
+      } //end fearAnalysis
+
+      function validAnalysis() {
+        if (humanMsg.indexOf("yes") != -1) {
+          //pretty bad
+          computerMsg = "What happened?"
+          questionTrack = "happen"
+        } else if (humanMsg.indexOf('no') != -1) {
+          computerMsg = "Maybe you had better keep riding stick horses!"
+          questionTrack = ""
+        } else {
+          genericResponse()
+        }
+      } //end fearAnalysis
+
+      function goodAnalysis() {
+        if (humanMsg.indexOf("yes") != -1) {
+          //pretty bad
+          computerMsg = "Horses are great teachers of humility!!"
+          questionTrack = "happen"
+        } else if (humanMsg.indexOf('no') != -1) {
+          computerMsg = "Hmmm...somehow I don't think that is being truthful."
+          questionTrack = ""
+        } else {
+          genericResponse()
+        }
+      } //end fearAnalysis
+
+      function braveAnalysis() {
+        if (humanMsg.indexOf("yes") != -1) {
+          //pretty bad
+          computerMsg = "Banff National Park in Canada is a GREAT place for a multi-day horsepacking trip!"
+          questionTrack = "banff"
+        } else if (humanMsg.indexOf('no') != -1) {
+          computerMsg = "They put up solar electric fence to keep the grizzly bears out of camp at night!"
+          questionTrack = ""
+        } else {
+          genericResponse()
+        }
+      } //end fearAnalysis
+
+
+
+      function genericResponse() {
+        if (genericResponses.length > 0) {
+          newResponse = Math.floor(Math.random() * genericResponses.length)
+          //console.log(newResponse);
+          //computerMsg = "Go away."
+          computerMsg = genericResponses[newResponse]
+          //humanMsg = ""
+
+          genericResponses.splice(newResponse, 1)
+          //console.log(genericResponses);
+
+          //computer.textContent = computerMsg
+          //human.value = humanMsg
+
+        } else {
+          computerMsg = "Maybe you should try bull riding at the rodeo. I heard that's a LOT of fun!"
+          button.className = 'displayNone'
+          human.className = 'displayNone'
+          setTimeout(killGame, 2000)
+        }
+
+      } //end generic response
+
+      function killGame() {
+        location.assign("https://buckinghorsesale.com/")
+      }
+
+
+    }
+  </script>
+</body>
+
+</html>
